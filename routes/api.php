@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,21 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+Route::group([
+  'prefix' => 'api',
+  'namespace' => 'Api',
+  'as' => 'api'], function () {
+  Route::group([
+    'prefix' => 'v1',
+    'namespace' => 'v1',
+    'as' => 'v1.'], function () {
+    Route::get('/', [
+      'as' => 'index',
+      'uses' => 'WelcomeController@index',
+    ]);
+  });
 });
